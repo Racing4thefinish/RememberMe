@@ -36,7 +36,7 @@ if ( true == first_pass){
 		
 		var pos_of_correct_mom = irandom(num_parents - 1);
 		
-		var x_loc = 0.5 * room_width - 0.5 * sprite_get_width(spr_head) * (num_parents-1);
+		var x_loc = 0.5 * room_width - 0.5 * sprite_get_width(spr_madre_base) * (num_parents-1);
 		var y_loc = 0.5 * room_height;
 		for (var i = 0; i < num_parents; i++){
 			
@@ -65,22 +65,8 @@ if ( true == first_pass){
 				ds_list_delete(ds_list_mom_eyes_image_index_temp, pos_eyes_index);
 			}
 			
-			x_loc += sprite_get_width(spr_mom_head) * 1.05;
+			x_loc += sprite_get_width(spr_madre_base) * 1.05;
 		}
-		
-		/*
-		// Generate the correct mother card
-		var x_loc = 0.5 * room_width;
-		var y_loc = 0.5 * room_height;
-		
-		
-		var length_heads = ds_list_size(ds_list_mom_head_image_index_temp);
-		var length_eyes  = ds_list_size(ds_list_mom_eyes_image_index_temp);
-		
-		var num_parents = min(length_heads, length_eyes);
-		
-		// Create the other "Moms"
-		*/
 	}
 	first_pass = false;
 }
