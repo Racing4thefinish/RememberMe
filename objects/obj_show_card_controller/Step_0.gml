@@ -64,7 +64,7 @@ if ( true == first_pass){
 		var ID_daughter = scr_create_person(x_loc, y_loc, spr_hija_base, spr_hija_boca, spr_hija_cejas, spr_hija_nariz, spr_hija_ojos, spr_index_boca, spr_index_cejas,spr_index_nariz, spr_index_ojos);
 		ds_list_add(ds_list_ID_obj, ID_daughter);
 		
-	} else if ( room == rm_hide_cards) {
+	} else if ( room == rm_hide_cards && character_counter < 4) {
 		var ds_list_eyes_image_index_temp     = ds_list_create();
 		var ds_list_eyes_image_index_source   = 0;
 		correct_eyes_image_index              = 0;
@@ -135,14 +135,6 @@ if ( true == first_pass){
 		
 		var length_eyes  = ds_list_size(ds_list_eyes_image_index_temp);
 		var length_nose  = ds_list_size(ds_list_nose_image_index_temp);
-		
-		// Remove the correct eyes from the ds_list
-		/*
-		var pos_correct_eyes_index = ds_list_find_index(ds_list_eyes_image_index_temp, correct_eyes_image_index);
-		var pos_correct_nose_index = ds_list_find_index(ds_list_eyes_image_index_temp, correct_nose_image_index);
-		ds_list_delete(ds_list_eyes_image_index_temp, pos_correct_eyes_index);
-		ds_list_delete(ds_list_nose_image_index_temp, pos_correct_nose_index);
-		*/
 		var num_parents = length_eyes * length_nose;
 		
 		pos_of_correct_mom = irandom(num_parents - 1);
@@ -180,41 +172,11 @@ if ( true == first_pass){
 			var ID_person = scr_create_person(x_loc, y_loc, spr_base, spr_boca, spr_cejas, spr_nariz, spr_ojos, image_index_boca, image_index_cejas, image_index_nariz, image_index_ojos);
 			ds_list_add(ds_list_ID_obj, ID_person);
 		}
-		
-		
-		/*
-		for (var i = 0; i < num_parents; i++){
-			
-			if ( i mod 2 == 0){
-				x_loc = 0.5 * room_width - 0.5 * sprite_get_width(spr_madre_base) * 1.05;;
-			} else {
-				x_loc = 0.5 * room_width + 0.5 * sprite_get_width(spr_madre_base) * 1.05;;
-			}
-			
-			if ( i < 2 ){
-				y_loc = 0.5 * room_height - 0.5 * sprite_get_height(spr_madre_base) * 1.05;
-			} else {
-				y_loc = 0.5 * room_height + 0.5 * sprite_get_height(spr_madre_base) * 1.05;
-			}
-			if ( i == pos_of_correct_mom){
-				image_index_ojos  = correct_eyes_image_index;
-				image_index_nariz = correct_nose_image_index;
-				
-				var ID_person = scr_create_person(x_loc, y_loc, spr_base, spr_boca, spr_cejas, spr_nariz, spr_ojos, image_index_boca, image_index_cejas,  image_index_nariz, image_index_ojos);
-				ds_list_add(ds_list_ID_obj, ID_person);
-			} else {
-				pos_eyes_index                = irandom(ds_list_size(ds_list_eyes_image_index_temp) - 1);
-				var temp_mom_eyes_image_index = ds_list_find_value(ds_list_eyes_image_index_temp, pos_eyes_index);
-				var image_index_ojos          = temp_mom_eyes_image_index;
-				
-				var ID_person = scr_create_person(x_loc, y_loc, spr_base, spr_boca, spr_cejas, spr_nariz, spr_ojos, image_index_boca, image_index_cejas, image_index_nariz, image_index_ojos);
-				ds_list_add(ds_list_ID_obj, ID_person);
-				
-				ds_list_delete(ds_list_eyes_image_index_temp, pos_eyes_index);
-			}
-		}
-		*/
 		ds_list_destroy(ds_list_eyes_image_index_temp);
+	} else if ( room == rm_hide_cards && character_counter >= 4) {
+		x_loc = 0.5 * room_width;
+		y_loc = 0.7 * room_height;
+		var ID_button = instance_create_depth(x_loc, y_loc, 0, obj_buttonPlayAgain);
 	}
 	first_pass = false;
 }
@@ -247,7 +209,7 @@ if ( true == gotoNextRoom || true == guess_correct){
 		//room_goto_next();
 	} else {
 		
-		if ( character_counter > 3 ){
+		if ( character_counter > 4 ){
 			alarm[1] = room_speed;
 		} else {
 			first_pass    = true;

@@ -7,12 +7,8 @@ draw_set_valign(fa_center);
 draw_set_font(fnt_thisIsYourFamily);
 draw_set_alpha(text_fade_alpha);
 
-if ( text_incorrect_timer < text_incorrect_duration){
-	draw_text(x_loc, y_loc, text[1]);
-} else if ( text_correct_timer < text_correct_duration){
-	draw_text(x_loc, y_loc, text[2]);
-} else {
-	draw_text(x_loc, y_loc, text[0]);
+for ( var i = 0; i < array_length_1d(x_loc); i++){
+	draw_text(x_loc[i], y_loc[i], text[i]);
 }
 
 draw_set_alpha(1.0);
