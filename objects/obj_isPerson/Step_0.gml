@@ -18,17 +18,53 @@ if ( true == mouse_check_button_pressed(mb_left) ){
 }
 
 if ( true == enable_cirle_motion){
+	if ( true == fp_angle){
+		angle = init_angle;
+		fp_angle = false;
+	}
+	var rot_vel = global.ID_show_card_controller.rot_vel;
+	
 	timer += delta_time/1000000.0;
 	
-	var rad_angle = init_angle + timer/circle_period*2*pi;
+	var dt_sec      = delta_time/1000000.0;
+	var delta_angle = rot_vel * dt_sec;
+	
+	angle += delta_angle;
+	var rad_angle = angle;
 	x = 0.5 * room_width + circle_radius * cos(rad_angle);
 	y = 0.5 * room_height + circle_radius * sin(rad_angle);
 	
 	if ( instance_exists(global.ID_show_card_controller)){
 		if ( guess_wrong_counter_prev != global.ID_show_card_controller.guess_wrong_counter){
-			circle_period = circle_period - 2.0 * global.ID_show_card_controller.guess_wrong_counter;
 			guess_wrong_counter_prev = global.ID_show_card_controller.guess_wrong_counter
 		}
+	}
+} else {
+	if ( tween_x_timer < tween_x_duration){
+		tween_x_timer += delta_time/1000000.0;
+		if ( tween_x_timer > tween_x_duration){
+			tween_x_timer = tween_x_duration;
+		}
+		x = script_execute(tween_x_scr, tween_x_timer,tween_x_start, tween_x_delta, tween_x_duration);
+	}
+	
+	if ( tween_y_timer < tween_y_duration){
+		tween_y_timer += delta_time/1000000.0;
+		if ( tween_y_timer > tween_y_duration){
+			tween_y_timer = tween_y_duration;
+		}
+		y = script_execute(tween_y_scr, tween_y_timer,tween_y_start, tween_y_delta, tween_y_duration);
+	}
+}
+
+if ( true == fade_and_destroy){
+	if ( fade_timer >= fade_timer_start + fade_alpha_duration){
+		fade_timer          = 0.0;
+		fade_timer_start    = 0.0;
+		fade_alpha_duration = 1.0;
+		fade_alpha_start    = 1.0;
+		fade_alpha_change   = -1.0;
+		alarm[0] = room_speed;
 	}
 }
 
@@ -38,7 +74,9 @@ if ( fade_timer <fade_timer_start + fade_alpha_duration){
 		fade_timer = fade_timer_start + fade_alpha_duration;
 	}
 	if ( fade_timer > fade_timer_start ){
-		fade_alpha = ease_in_circ(fade_timer - fade_timer_start, fade_alpha_start, fade_alpha_change, fade_alpha_duration )
+		var arg0 = fade_timer - fade_timer_start;
+		
+		fade_alpha = ease_in_sine(arg0, fade_alpha_start, fade_alpha_change, fade_alpha_duration )
 	}
 } else {
 	fade_alpha = 1.0;	

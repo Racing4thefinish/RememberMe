@@ -32,7 +32,8 @@ ID_person.sprite_index_mouth    = sprite_boca;
 ID_person.sprite_index_eyeBrows = sprite_cejas;
 ID_person.init_angle            = angle;
 ID_person.fade_timer            = 0.0;
-ID_person.fade_alpha_duration = random(5);
+ID_person.fade_timer_start      = 1.0;
+ID_person.fade_alpha_duration  = angle/(2*pi)*3 + 2;
 
 ID_person.image_index_head     = 0;
 ID_person.image_index_eyes     = image_index_ojos;

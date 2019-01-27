@@ -1,5 +1,9 @@
 /// @description Initialize
 
+// Rotational Velocity for cards
+rot_per = 80.0;         // Period for rotation seconds
+rot_vel = 2*pi/rot_per;
+
 // IDs for personas
 ID_mom      = noone;
 ID_dad      = noone;
