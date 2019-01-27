@@ -16,3 +16,30 @@ if ( true == mouse_check_button_pressed(mb_left) ){
 		audio_play_sound(snd_index,0,false);
 	}
 }
+
+if ( true == enable_cirle_motion){
+	timer += delta_time/1000000.0;
+	
+	var rad_angle = init_angle + timer/circle_period*2*pi;
+	x = 0.5 * room_width + circle_radius * cos(rad_angle);
+	y = 0.5 * room_height + circle_radius * sin(rad_angle);
+	
+	if ( instance_exists(global.ID_show_card_controller)){
+		if ( guess_wrong_counter_prev != global.ID_show_card_controller.guess_wrong_counter){
+			circle_period = circle_period - 2.0 * global.ID_show_card_controller.guess_wrong_counter;
+			guess_wrong_counter_prev = global.ID_show_card_controller.guess_wrong_counter
+		}
+	}
+}
+
+if ( fade_timer <fade_timer_start + fade_alpha_duration){
+	fade_timer += delta_time/1000000.0;
+	if (fade_timer > fade_timer_start + fade_alpha_duration){
+		fade_timer = fade_timer_start + fade_alpha_duration;
+	}
+	if ( fade_timer > fade_timer_start ){
+		fade_alpha = ease_in_circ(fade_timer - fade_timer_start, fade_alpha_start, fade_alpha_change, fade_alpha_duration )
+	}
+} else {
+	fade_alpha = 1.0;	
+}
