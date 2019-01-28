@@ -1,0 +1,1 @@
+Import the project file into gamemaker.

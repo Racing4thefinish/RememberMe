@@ -1,1 +1,2 @@
-room_goto(rm_selectLanguage);
+//room_goto(rm_selectLanguage);
+game_restart();
